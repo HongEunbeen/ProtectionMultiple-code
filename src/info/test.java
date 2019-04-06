@@ -24,6 +24,8 @@ public class test {
 	private JButton helpIcon;
 	private JButton noticIcon;
 	private JPanel panelBtn;
+	private JButton KeyBtn;
+	private JTextField SecurityField;
 	/**
 	 * Launch the application.
 	 */
@@ -52,7 +54,7 @@ public class test {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 656, 449);
+		frame.setBounds(100, 100, 656, 558);
 		frame.getContentPane().setLayout(null);
 		//가상의 키VirtualKey
 		//평문 PlainText
@@ -66,7 +68,7 @@ public class test {
 		panelIcon.setLayout(null);
 		
 		panelIcon.setBounds(14, 233, 108, 157);
-		panelBtn.setBounds(136, 322, 429, 68);
+		panelBtn.setBounds(136, 418, 380, 68);
 		
 		VirtualKeyText = new JLabel("가상의 키");
 		PlainText = new JLabel("평문");
@@ -88,12 +90,12 @@ public class test {
 		helpIcon.setIcon(new ImageIcon("C:\\java_study\\project\\info\\Image\\help.png"));
 		
 		VirtualKeyText.setBounds(14, 14, 108, 35);
-		PlainText.setBounds(14, 61, 108, 35);
-		VirtualKeyField.setBounds(136, 14, 429, 37);
-		PlainField.setBounds(136, 61, 429, 37);
-		PasswordTable.setBounds(136, 110, 429, 200);
-		DecryptionBtn.setBounds(235, 12, 180, 44);
-		EncryptionBtn.setBounds(14, 12, 180, 44);
+		PlainText.setBounds(14, 81, 108, 35);
+		VirtualKeyField.setBounds(136, 14, 380, 37);
+		PlainField.setBounds(136, 80, 380, 37);
+		PasswordTable.setBounds(136, 190, 380, 200);
+		DecryptionBtn.setBounds(195, 12, 171, 44);
+		EncryptionBtn.setBounds(14, 12, 171, 44);
 		helpIcon.setBounds(0, 0, 105, 74);
 		noticIcon.setBounds(0, 83, 105, 74);
 		
@@ -109,6 +111,19 @@ public class test {
 		panelBtn.add(EncryptionBtn);
 		panelIcon.add(helpIcon);
 		panelIcon.add(noticIcon);
+		
+		KeyBtn = new JButton("암호표");
+		KeyBtn.setBounds(530, 14, 94, 35);
+		frame.getContentPane().add(KeyBtn);
+		
+		SecurityField = new JTextField();
+		SecurityField.setColumns(10);
+		SecurityField.setBounds(136, 129, 380, 37);
+		frame.getContentPane().add(SecurityField);
+		
+		JLabel SecurityText = new JLabel("암호문");
+		SecurityText.setBounds(14, 128, 108, 35);
+		frame.getContentPane().add(SecurityText);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
