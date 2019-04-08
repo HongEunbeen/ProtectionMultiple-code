@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 public class Main implements ActionListener {
 
 	public static String[][] table = new String[5][5];
+	public static String key;
 	private JFrame frame;
 	private JLabel VirtualKeyText;
 	private JLabel PlainText;
@@ -37,7 +38,6 @@ public class Main implements ActionListener {
 	public Main() {
 		initialize();
 	}
-	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -141,8 +141,11 @@ public class Main implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(DecryptionBtn)) {
 			checkJTextField();//복호화
+			
 		}else if(e.getSource().equals(EncryptionBtn)) {
 			checkJTextField();//암호화
+			setEncryption();
+			
 		}else if(e.getSource().equals(KeyBtn)) {
 			checkJTextField();	
 			setTableKey();
@@ -164,6 +167,13 @@ public class Main implements ActionListener {
 		VirtyualKeyC virc = new VirtyualKeyC(VirtualKeyField.getText());
 		table = virc.setTable();
 		model = new DefaultTableModel(table, column);
-		PasswordTable.setModel(model);  
+		PasswordTable.setModel(model); 
+		key = virc.getkey();
+	}
+	public void setEncryption() {
+		EncryptionC encry = new EncryptionC(table ,key, PlainField.getText());
+		encry.CheckSpace();
+		encry.CheckOverLap();
+		encry.CreEncry();
 	}
 }

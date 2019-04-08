@@ -41,4 +41,7 @@ public class VirtyualKeyC {
 		//String 배열로 변환
 		return Stable;
 	}
+	public String getkey(){
+		return key;
+	}
 }
