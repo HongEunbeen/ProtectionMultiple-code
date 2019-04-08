@@ -17,7 +17,6 @@ public class test {
 	private JTextField VirtualKeyField;
 	private JLabel PlainText;
 	private JTextField PlainField;
-	private JTable PasswordTable;
 	private JButton DecryptionBtn;
 	private JButton EncryptionBtn;
 	private JPanel panelIcon;
@@ -26,6 +25,7 @@ public class test {
 	private JPanel panelBtn;
 	private JButton KeyBtn;
 	private JTextField SecurityField;
+	private JTable table;
 	/**
 	 * Launch the application.
 	 */
@@ -79,8 +79,6 @@ public class test {
 		VirtualKeyField.setColumns(10);
 		PlainField.setColumns(10);
 		
-		PasswordTable = new JTable();
-		
 		DecryptionBtn = new JButton("복호화");
 		EncryptionBtn = new JButton("암호화");
 		helpIcon = new JButton();
@@ -93,7 +91,6 @@ public class test {
 		PlainText.setBounds(14, 81, 108, 35);
 		VirtualKeyField.setBounds(136, 14, 380, 37);
 		PlainField.setBounds(136, 80, 380, 37);
-		PasswordTable.setBounds(136, 190, 380, 200);
 		DecryptionBtn.setBounds(195, 12, 171, 44);
 		EncryptionBtn.setBounds(14, 12, 171, 44);
 		helpIcon.setBounds(0, 0, 105, 74);
@@ -103,7 +100,6 @@ public class test {
 		frame.getContentPane().add(PlainField); 
 		frame.getContentPane().add(VirtualKeyField);
 		frame.getContentPane().add(PlainText);
-		frame.getContentPane().add(PasswordTable);
 		frame.getContentPane().add(panelBtn);
 		frame.getContentPane().add(panelIcon);
 		
@@ -124,6 +120,15 @@ public class test {
 		JLabel SecurityText = new JLabel("암호문");
 		SecurityText.setBounds(14, 128, 108, 35);
 		frame.getContentPane().add(SecurityText);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBounds(136, 192, 380, 202);
+		frame.getContentPane().add(panel);
+		
+		table = new JTable();
+		table.setBounds(377, 164, -344, -164);
+		panel.add(table);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

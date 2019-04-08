@@ -12,8 +12,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
+
 public class Main implements ActionListener {
-	
+
+	public static String[][] table = new String[5][5];
 	private JFrame frame;
 	private JLabel VirtualKeyText;
 	private JLabel PlainText;
@@ -30,7 +32,8 @@ public class Main implements ActionListener {
 	private JPanel panelBtn;
 	private JButton KeyBtn;
 	private JTextField SecurityField;
-	private char[] column = {1,2,3,4,5};
+	private String[] column = {"1","2","3","4","5"};
+	DefaultTableModel model;
 	public Main() {
 		initialize();
 	}
@@ -75,13 +78,14 @@ public class Main implements ActionListener {
 		PlainField = new JTextField();
 		SecurityField = new JTextField();
 		
-		
-		
 		SecurityField.setColumns(10);
 		VirtualKeyField.setColumns(10);
 		PlainField.setColumns(10);
 		
-		PasswordTable = new JTable(5,5);
+		model = new DefaultTableModel(table, column);
+		PasswordTable = new JTable(model);
+		PasswordTable.setRowHeight(40);
+		PasswordTable.getTableHeader().setReorderingAllowed(false);    
 		
 		KeyBtn = new JButton("암호표");
 		DecryptionBtn = new JButton("복호화");
@@ -96,8 +100,8 @@ public class Main implements ActionListener {
 		noticIcon.addActionListener(this);
 		
 		
-		noticIcon.setIcon(new ImageIcon("C:\\java_study\\project\\info\\Image\\notic.png"));
-		helpIcon.setIcon(new ImageIcon("C:\\java_study\\project\\info\\Image\\help.png"));
+		noticIcon.setIcon(new ImageIcon("Image\\notic.png"));
+		helpIcon.setIcon(new ImageIcon("Image\\help.png"));
 		
 		
 		SecurityText.setBounds(14, 128, 108, 35);
@@ -136,12 +140,12 @@ public class Main implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(DecryptionBtn)) {
-			checkJTextField("DecryptionBtn");//복호화
-			Decryption decry = new Decryption();
+			checkJTextField();//복호화
 		}else if(e.getSource().equals(EncryptionBtn)) {
-			checkJTextField("EncryptionBtn");		//암호화
+			checkJTextField();//암호화
 		}else if(e.getSource().equals(KeyBtn)) {
-			checkJTextField("KeyBtn");	
+			checkJTextField();	
+			setTableKey();
 		}
 		if(e.getSource().equals(helpIcon)) {
 			
@@ -149,19 +153,17 @@ public class Main implements ActionListener {
 			
 		}
 	}
-	public void checkJTextField(String field) {
-		if(field.equals("keyBtn") || VirtualKeyField.getText().isEmpty()) {
+	public void checkJTextField() {
+		if(VirtualKeyField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "키를 입력해 주세요!!");
+			return;
 		}else {
-			VirtyualKeyC virc = new VirtyualKeyC(VirtualKeyField.getText());
-			
-			/*if(PlainField.getText().isEmpty() && field.equals("EncryptionBtn")) {
-				JOptionPane.showMessageDialog(null, "평문를 입력해 주세요");
-			}else return;
-			if(SecurityField.getText().isEmpty() && field.equals("DecryptionBtn")) {
-				JOptionPane.showMessageDialog(null, "암호를 입력해 주세요");
-			}else return;*/
 		}
-		
+	}
+	public void setTableKey() {
+		VirtyualKeyC virc = new VirtyualKeyC(VirtualKeyField.getText());
+		table = virc.setTable();
+		model = new DefaultTableModel(table, column);
+		PasswordTable.setModel(model);  
 	}
 }
