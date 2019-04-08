@@ -4,15 +4,16 @@ public class EncryptionC{
 	private String key;
 	private String EncyrText;
 	private String PlainText;
-	private ArrayList<char[]> NOverArr;
-	private ArrayList<char[]> EncryArr;
+	private ArrayList<char[]> NOverList;
+	private ArrayList<char[]> EncryList;
 	public String Stable[][];
 	
 	EncryptionC(String[][] table ,String key, String PlainText){
 		this.key = key;
 		this.PlainText = PlainText;
-		EncryArr = new ArrayList<char[]>();
-		NOverArr = new ArrayList<char[]>();
+		EncyrText = "";
+		EncryList = new ArrayList<char[]>();
+		NOverList = new ArrayList<char[]>();
 		Stable = table;
 	}
 	public void CheckSpace() {
@@ -20,7 +21,7 @@ public class EncryptionC{
 		System.out.println(PlainText);
 	}
 	public void CheckOverLap(){
-		for( int i = 0 ; i < PlainText.length() ; i+=2 ){
+		for( int i = 0 ; i < PlainText.length(); i+=2 ){
 			char[] temp = new char[2];
 			temp[0] = PlainText.charAt(i);
 			try{
@@ -33,27 +34,30 @@ public class EncryptionC{
 			}catch(StringIndexOutOfBoundsException e){
 				temp[1] = 'x'; 
 			}
-			NOverArr.add(temp);
+			NOverList.add(temp);
 			System.out.println(temp);
 		}
+		
 	}
-/*	public void CreEncry() {
+	public String CreEncry() {
 		int x1 = 0 , x2 = 0 , y1 = 0, y2 = 0;
-		for(int i = 0 ; i < NOverArr.size() ; i++){
+		int i = 0;
+		while(i < NOverList.size()) {
 			char[] temp = new char[2];
-			for( int j = 0 ; j < Stable.length; j++ ){
-				for( int z = 0 ; z < Stable[j].length; z++ ){
-					if(Stable[j][z].equals(NOverArr.get(i)[0])){
+			for(int j = 0 ; j < Stable.length; j++){
+				for(int z = 0 ; z < Stable[j].length; z++){
+					if(Stable[j][z].charAt(0) == NOverList.get(i)[0]){
 						x1 = j;
 						y1 = z;
 					}
-					if(Stable[j][z].equals(NOverArr.get(i)[1])){
+					if(Stable[j][z].charAt(0) == NOverList.get(i)[1]){
 						x2 = j;
 						y2 = z;
 					}
 				}
 			}
 			if(x1==x2){
+				System.out.println(x1 + x2);
 				temp[0] = Stable[x1][(y1+1)%5].charAt(0);
 				temp[1] = Stable[x2][(y2+1)%5].charAt(0);
 			}
@@ -65,11 +69,13 @@ public class EncryptionC{
 				temp[0] = Stable[x2][y1].charAt(0);
 				temp[1] = Stable[x1][y2].charAt(0);
 			}
-			EncryArr.add(temp);	
+			EncryList.add(temp);
+			i++;
 		}
-		for(int i = 0 ; i < EncryArr.size() ; i++){
-			EncyrText += EncryArr.get(i)[0]+""+EncryArr.get(i)[1]+" ";
+		for(int j = 0 ; j < EncryList.size() ; j++){
+			EncyrText += EncryList.get(j)[0]+""+EncryList.get(j)[1]+" ";
 		}
 		System.out.println(EncyrText);
-	}*/
+		return EncyrText;
+	}
 }

@@ -174,6 +174,7 @@ public class Main implements ActionListener {
 		EncryptionC encry = new EncryptionC(table ,key, PlainField.getText());
 		encry.CheckSpace();
 		encry.CheckOverLap();
-		encry.CreEncry();
+		String a = encry.CreEncry();
+		JOptionPane.showMessageDialog(null, a , "암호문", JOptionPane.WARNING_MESSAGE);
 	}
 }
