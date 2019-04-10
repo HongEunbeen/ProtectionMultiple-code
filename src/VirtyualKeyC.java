@@ -2,12 +2,13 @@
 public class VirtyualKeyC {
 	
 	public String key = "";
-	public static String alpabet = "abcdefghijklmnopqrstuvwxyz";
+	public static String alpabet = "ABCDEFGHIJKLMNOPQRSTUVWXY";
 	public char table[][];
 	public String Stable[][];
 	String setNewKey;
 	boolean setFlag;
 	int setCount;
+	int arrQ[][];
 	
 	VirtyualKeyC(String key) {
 		this.key = key;
@@ -16,6 +17,7 @@ public class VirtyualKeyC {
 		setNewKey = "";
 		setFlag = false; 
 		setCount = 0;
+		arrQ = new int[1][2];
 	}
 	
 	public String[][] setTable() {
@@ -35,7 +37,14 @@ public class VirtyualKeyC {
 		for( int i = 0 ; i < table.length ; i++ ){
 			for( int j = 0; j <table[i].length ; j++ ){
 				table[i][j] = setNewKey.charAt(setCount++);
-				Stable[i][j] = String.valueOf(table[i][j]);
+				if(table[i][j] == 'Q') {
+					Stable[i][j] = String.valueOf(table[i][j]) + "/Z";
+					arrQ[0][0] = i;
+					arrQ[0][1] = j;
+				}else {
+					Stable[i][j] = String.valueOf(table[i][j]);
+				}
+				
 			}
 		}
 		//String 배열로 변환
@@ -43,5 +52,8 @@ public class VirtyualKeyC {
 	}
 	public String getkey(){
 		return key;
+	}
+	public int[][] getarrQ() {
+		return arrQ;
 	}
 }

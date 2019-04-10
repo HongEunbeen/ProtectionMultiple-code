@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -17,6 +18,7 @@ public class Main implements ActionListener {
 
 	public static String[][] table = new String[5][5];
 	public static String key;
+	public static int[][] arrQ = new int[1][2];
 	private JFrame frame;
 	private JLabel VirtualKeyText;
 	private JLabel PlainText;
@@ -35,6 +37,7 @@ public class Main implements ActionListener {
 	private JTextField SecurityField;
 	private String[] column = {"1","2","3","4","5"};
 	DefaultTableModel model;
+	
 	public Main() {
 		initialize();
 	}
@@ -141,6 +144,8 @@ public class Main implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(DecryptionBtn)) {
 			checkJTextField();//복호화
+			setDecryption();
+			
 			
 		}else if(e.getSource().equals(EncryptionBtn)) {
 			checkJTextField();//암호화
@@ -151,9 +156,10 @@ public class Main implements ActionListener {
 			setTableKey();
 		}
 		if(e.getSource().equals(helpIcon)) {
-			
-		}else if(e.getSource().equals(noticIcon)) {
-			
+			getIcon("help");
+		}
+		if(e.getSource().equals(noticIcon)) {
+			getIcon("notic");
 		}
 	}
 	public void checkJTextField() {
@@ -169,12 +175,25 @@ public class Main implements ActionListener {
 		model = new DefaultTableModel(table, column);
 		PasswordTable.setModel(model); 
 		key = virc.getkey();
+		arrQ = virc.getarrQ();
 	}
 	public void setEncryption() {
-		EncryptionC encry = new EncryptionC(table ,key, PlainField.getText());
+		EncryptionC encry = new EncryptionC(table ,key, arrQ,PlainField.getText());
 		encry.CheckSpace();
 		encry.CheckOverLap();
 		String a = encry.CreEncry();
+		//암호필드에 암호 설정
+		SecurityField.setText(a);
 		JOptionPane.showMessageDialog(null, a , "암호문", JOptionPane.WARNING_MESSAGE);
+	}
+	public void setDecryption() {
+		DecryptionC decry = new DecryptionC(table, key, arrQ, SecurityField.getText());
+	}
+	public void getIcon(String icon){
+		if(icon.equals("help")) {
+			JOptionPane.showMessageDialog(null,"help", "암호문", JOptionPane.OK_OPTION);
+		}else if(icon.equals("notic")) {
+			JOptionPane.showMessageDialog(null, "notic" , "암호문", JOptionPane.OK_OPTION);
+		}
 	}
 }

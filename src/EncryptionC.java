@@ -7,14 +7,15 @@ public class EncryptionC{
 	private ArrayList<char[]> NOverList;
 	private ArrayList<char[]> EncryList;
 	public String Stable[][];
-	
-	EncryptionC(String[][] table ,String key, String PlainText){
+	public int[][] arrQ;
+	EncryptionC(String[][] table ,String key, int [][] arrQ , String PlainText){
 		this.key = key;
 		this.PlainText = PlainText;
 		EncyrText = "";
 		EncryList = new ArrayList<char[]>();
 		NOverList = new ArrayList<char[]>();
 		Stable = table;
+		this.arrQ = arrQ;
 	}
 	public void CheckSpace() {
 		PlainText = PlainText.replaceAll(" ", "");
@@ -26,18 +27,17 @@ public class EncryptionC{
 			temp[0] = PlainText.charAt(i);
 			try{
 				if( PlainText.charAt(i) == PlainText.charAt(i+1)){
-					temp[1] = 'x';
+					temp[1] = 'X';
 					i--;
 				}else{
 					temp[1] = PlainText.charAt(i+1);
 				}
 			}catch(StringIndexOutOfBoundsException e){
-				temp[1] = 'x'; 
+				temp[1] = 'X'; 
 			}
 			NOverList.add(temp);
 			System.out.println(temp);
 		}
-		
 	}
 	public String CreEncry() {
 		int x1 = 0 , x2 = 0 , y1 = 0, y2 = 0;
@@ -46,6 +46,15 @@ public class EncryptionC{
 			char[] temp = new char[2];
 			for(int j = 0 ; j < Stable.length; j++){
 				for(int z = 0 ; z < Stable[j].length; z++){
+					//Q와 Z처리
+					if(arrQ[0][0] == j && arrQ[0][1] == z) {
+						Stable[j][z] = "Q";
+					}
+					if(NOverList.get(i)[0] == 'Z') {
+						NOverList.get(i)[0] = 'Q';
+					}else if(NOverList.get(i)[1] == 'Z') {
+						NOverList.get(i)[1] = 'Q';
+					}
 					if(Stable[j][z].charAt(0) == NOverList.get(i)[0]){
 						x1 = j;
 						y1 = z;
