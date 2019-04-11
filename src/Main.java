@@ -16,9 +16,13 @@ import javax.swing.ImageIcon;
 
 public class Main implements ActionListener {
 
-	public static String[][] table = new String[5][5];
-	public static String key;
-	public static int[][] arrQ = new int[1][2];
+	public static String[][] table = new String[5][5];;
+	public String key;
+	public int[][] arrQ;
+	public String checkSpace;
+	public String checkZ;
+	public boolean checkOdd;
+	public String checkX;
 	private JFrame frame;
 	private JLabel VirtualKeyText;
 	private JLabel PlainText;
@@ -40,6 +44,11 @@ public class Main implements ActionListener {
 	
 	public Main() {
 		initialize();
+		arrQ = new int[1][2];
+		checkOdd = false;
+		checkSpace = "";
+		checkZ = "";
+		checkX = "";
 	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -178,22 +187,39 @@ public class Main implements ActionListener {
 		arrQ = virc.getarrQ();
 	}
 	public void setEncryption() {
-		EncryptionC encry = new EncryptionC(table ,key, arrQ,PlainField.getText());
-		encry.CheckSpace();
+		EncryptionC encry = new EncryptionC(table ,key, arrQ, PlainField.getText());
+		checkZ = encry.CheckZ();
+		checkSpace = encry.CheckSpace();
 		encry.CheckOverLap();
+		checkX = encry.CheckX();
+		checkOdd = encry.checkOdd;
 		String a = encry.CreEncry();
 		//암호필드에 암호 설정
+		SecurityField.setText("");
 		SecurityField.setText(a);
 		JOptionPane.showMessageDialog(null, a , "암호문", JOptionPane.WARNING_MESSAGE);
 	}
 	public void setDecryption() {
-		DecryptionC decry = new DecryptionC(table, key, arrQ, SecurityField.getText());
+		DecryptionC decry = new DecryptionC(table, key, arrQ, checkSpace, checkOdd , checkZ, checkX ,SecurityField.getText());
+		decry.CheckSpace();
+		decry.CheckOverLap();
+		String a = decry.CreDecry();
+		//암호필드에 암호 설정
+		PlainField.setText("");
+		PlainField.setText(a);
+		JOptionPane.showMessageDialog(null, a , "복호문", JOptionPane.WARNING_MESSAGE);
 	}
 	public void getIcon(String icon){
 		if(icon.equals("help")) {
-			JOptionPane.showMessageDialog(null,"help", "암호문", JOptionPane.OK_OPTION);
+			JOptionPane.showMessageDialog(null,"다중 문자 치환 암호화 방법은 2개 이상의 문자열을 묶어 치환하는 방법으로\n"
+					+ "쌍자 암호가 그 방법 중 하나다. 1854년 찰스 휘트스톤이 개발한 쌍자 암호는\n"
+					+ "1차 세계대전 중 영국에서 사용되었다.\n"
+					+ "쌍자 암호는 두 글자 쌍을 다른 두 글자 쌍으로 대체하는 암호화 방법으로 보통 정사각형 안에\n"
+					+ "영어 알파멧을 대체하는 방법을 사용한다.","help",  JOptionPane.OK_OPTION);
 		}else if(icon.equals("notic")) {
-			JOptionPane.showMessageDialog(null, "notic" , "암호문", JOptionPane.OK_OPTION);
+			JOptionPane.showMessageDialog(null, "1. 대문자를 기본으로 사용한다\n"
+												+ "2. 25개의 칸을 위해 영문에서 많이 나타나지 않는 q와 z를 같은 칸에 놓는다." , "notic", JOptionPane.OK_OPTION);
 		}
 	}
+	
 }

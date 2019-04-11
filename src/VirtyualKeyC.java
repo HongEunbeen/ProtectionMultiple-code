@@ -19,9 +19,12 @@ public class VirtyualKeyC {
 		setCount = 0;
 		arrQ = new int[1][2];
 	}
-	
+	public void checkspace(){
+		key = key.replaceAll(" ", "");	
+	}
 	public String[][] setTable() {
 		key += alpabet;
+		checkspace();
 		// 중복처리
 		for( int i = 0 ; i < key.length() ; i++) {
 			for( int j = 0 ; j < setNewKey.length() ; j++){
